@@ -95,6 +95,159 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/cbd1_pipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DelimitedText3",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CustomerID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NameStyle",
+						"type": "bit"
+					},
+					{
+						"name": "Title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MiddleName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Suffix",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CompanyName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesPerson",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EmailAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Phone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PasswordHash",
+						"type": "varchar"
+					},
+					{
+						"name": "PasswordSalt",
+						"type": "varchar"
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SalesLT",
+					"table": "Customer"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -229,6 +382,138 @@
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "cn4"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Average_Covered_Charges",
+						"type": "String"
+					},
+					{
+						"name": "Average_Total_Payments",
+						"type": "String"
+					},
+					{
+						"name": "Total_Discharges_",
+						"type": "String"
+					},
+					{
+						"name": "Bachelor's_or_Higher",
+						"type": "String"
+					},
+					{
+						"name": "HS_Grad_or",
+						"type": "String"
+					},
+					{
+						"name": "Payments__",
+						"type": "String"
+					},
+					{
+						"name": "Reimbursement__",
+						"type": "String"
+					},
+					{
+						"name": "Covered_Charges_",
+						"type": "String"
+					},
+					{
+						"name": "Region_Provider_Name",
+						"type": "String"
+					},
+					{
+						"name": "ReimbursementPercentage__",
+						"type": "String"
+					},
+					{
+						"name": "Definition__",
+						"type": "String"
+					},
+					{
+						"name": "Region__",
+						"type": "String"
+					},
+					{
+						"name": "INCOME_PER_CAPITA__",
+						"type": "String"
+					},
+					{
+						"name": "EARNINGS_-_BACHELORS",
+						"type": "String"
+					},
+					{
+						"name": "EARNINGS_-_GRADUATE",
+						"type": "String"
+					},
+					{
+						"name": "EARNINGS_-_HS",
+						"type": "String"
+					},
+					{
+						"name": "EARNINGS-_LESS_THAN",
+						"type": "String"
+					},
+					{
+						"name": "MEDIAN_FAMILY_INCOME__",
+						"type": "String"
+					},
+					{
+						"name": "of_Records_",
+						"type": "String"
+					},
+					{
+						"name": "POP_25_OVER__",
+						"type": "String"
+					},
+					{
+						"name": "City__",
+						"type": "String"
+					},
+					{
+						"name": "Id__",
+						"type": "String"
+					},
+					{
+						"name": "Name__",
+						"type": "String"
+					},
+					{
+						"name": "State__",
+						"type": "String"
+					},
+					{
+						"name": "Street_Address_",
+						"type": "String"
+					},
+					{
+						"name": "Zip_Code_",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText3')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
